@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { getDebit, getVeolia } from "../services/debit.service";
-import { RESIDENTS } from "../services/utils/constants";
+import { getDebit, getVeolia } from "../ts/services/debit.service";
+import { RESIDENTS } from "../ts/services/utils/constants";
 
 const debit = ref("");
 const cons = ref("");
