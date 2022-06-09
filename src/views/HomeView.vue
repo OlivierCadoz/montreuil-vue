@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { getDebit, getVeolia } from "@/services/debit.service";
-import { RESIDENTS } from "@/services/utils/constants";
+import { getDebit, getVeolia } from "../services/debit.service";
+import { RESIDENTS } from "../services/utils/constants";
 
 const debit = ref("");
 const cons = ref("");
 const axelCons = ref("");
 const olivierCons = ref("");
-const expenses = ref([]);
+const expenses = ref([] as number[]);
 const isVeolia = ref(false);
 
 function getExpenses() {
   expenses.value = isVeolia.value
     ? getVeolia({
-        totalExpense: debit.value,
-        totalConsumption: cons.value,
-        consumptionAxel: axelCons.value,
-        consumptionOlivier: olivierCons.value,
+        totalExpense: +debit.value,
+        totalConsumption: +cons.value,
+        consumptionAxel: +axelCons.value,
+        consumptionOlivier: +olivierCons.value,
       })
-    : getDebit(debit.value);
+    : getDebit(+debit.value);
 }
 </script>
 

@@ -1,4 +1,11 @@
 {
+  "baseUrl": ".",
+  "paths": {
+      "@/*": ["src/*"]
+  },
+  "compilerOptions": {
+    "noImplicitAny": false,
+  },
   "files": [],
   "references": [
     {
