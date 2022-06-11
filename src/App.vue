@@ -1,6 +1,5 @@
 <script setup lang="ts">
-// import { RouterLink, RouterView } from "vue-router";
-// import HelloWorld from "@/components/HelloWorld.vue";
+import { RouterView } from "vue-router";
 </script>
 
 <template>
@@ -25,18 +24,9 @@ body {
   font-size: 16px;
 }
 
-#app {
-  height: 100%;
-  width: 100%;
-}
-
+#app,
 .wrapper {
   height: 100%;
   width: 100%;
-
-  @media (min-width: 768px) {
-    display: flex;
-    justify-content: center;
-  }
 }
 </style>

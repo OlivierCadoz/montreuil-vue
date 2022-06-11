@@ -1,166 +1,132 @@
 <script setup lang="ts">
 import { ref } from "vue";
+
+import FormField from "../components/FormField.vue";
+import InputNumber from "../components/InputNumber.vue";
+import ResultList from "../components/ResultList.vue";
+
 import { getDebit, getVeolia } from "../ts/services/debit.service";
 import { RESIDENTS } from "../ts/services/utils/constants";
 
-const debit = ref("");
-const cons = ref("");
-const axelCons = ref("");
-const olivierCons = ref("");
+const debit = ref(0);
+const cons = ref(0);
+const axelCons = ref(0);
+const olivierCons = ref(0);
 const expenses = ref([] as number[]);
 const isVeolia = ref(false);
 
 function getExpenses() {
-  expenses.value = isVeolia.value
-    ? getVeolia({
-        totalExpense: +debit.value,
-        totalConsumption: +cons.value,
-        consumptionAxel: +axelCons.value,
-        consumptionOlivier: +olivierCons.value,
-      })
-    : getDebit(+debit.value);
+  if (isVeolia.value) {
+    expenses.value = getVeolia({
+      totalExpense: +debit.value,
+      totalConsumption: +cons.value,
+      consumptionAxel: +axelCons.value,
+      consumptionOlivier: +olivierCons.value,
+    });
+  } else  {
+    expenses.value = getDebit(+debit.value);
+  }
 }
 </script>
 
 <template>
-  <form class="debit-form" @submit.prevent="getExpenses">
-    <fieldset class="debit-form__field debit-form__field--row">
-      <legend class="debit-form__legend">
-        Est-ce une facture
-        <span class="debit-form__legend--veolia"> Véolia</span> ?
-      </legend>
+  <section class="grid-container">    
+    <form class="debit-form" @submit.prevent="getExpenses">
+      <FormField row>
+        <template #legend>
+          Est-ce une facture
+          <span class="debit-form__legend--veolia"> Véolia</span> ?
+        </template>
 
-      <label class="debit-form__toggle-label" for="toggle">Oui</label>
-      <input
-        id="toggle"
-        class="debit-form__toggle"
-        type="checkbox"
-        v-model="isVeolia"
-      />
-    </fieldset>
-
-    <fieldset class="debit-form__field">
-      <legend class="debit-form__legend">Répartition de la facture</legend>
-
-      <label class="debit-form__label" for="debit">Montant total :</label>
-      <input
-        id="debit"
-        class="debit-form__input"
-        type="number"
-        v-model="debit"
-      />
-
-      <template v-if="isVeolia">
-        <label class="debit-form__label" for="cons">
-          Consommation totale :
-        </label>
+        <label class="debit-form__toggle-label" for="toggle">Oui</label>
         <input
-          id="cons"
-          class="debit-form__input"
-          type="number"
-          v-model="cons"
+          id="toggle"
+          class="debit-form__toggle"
+          type="checkbox"
+          v-model="isVeolia"
         />
+      </FormField>
 
-        <label class="debit-form__label" for="axel-cons">
-          Consommation de Axel :
-        </label>
-        <input
-          id="axel-cons"
-          class="debit-form__input"
-          type="number"
-          v-model="axelCons"
-        />
+      <FormField>
+        <template #legend>
+          Répartition de la facture
+        </template>
 
-        <label class="debit-form__label" for="olivier-cons">
-          Consommation de Olivier :
-        </label>
-        <input
-          id="olivier-cons"
-          class="debit-form__input"
-          type="number"
-          v-model="olivierCons"
-        />
-      </template>
+        <InputNumber inputId="debit" v-model="debit">
+          Montant total :
+        </InputNumber>
+
+        <template v-if="isVeolia">
+          <InputNumber inputId="cons" v-model="cons">
+            Consommation totale :
+          </InputNumber>
+
+          <InputNumber inputId="axel-cons" v-model="axelCons">
+            Consommation de Axel :
+          </InputNumber>
+
+          <InputNumber inputId="olivier-cons" v-model="olivierCons">
+            Consommation de olivier :
+          </InputNumber>
+        </template>
+      </FormField>
 
       <button class="debit-form__submit" type="submit">Répartir</button>
-    </fieldset>
+    </form>
 
-    <ul v-if="!!expenses.length" class="debit-form__result-list">
-      <li v-for="(resident, index) in RESIDENTS" :key="resident">
-        {{ resident }} : {{ expenses[index] }}
-      </li>
-    </ul>
-  </form>
+    <aside class="result-wrapper">
+      <ResultList
+        v-if="!!expenses.length"
+        :expenses="expenses"
+        @close="expenses = []"
+      />
+    </aside>
+  </section>
 </template>
 
 <style lang="scss" scoped>
-.debit-form,
-.debit-form__field {
+.grid-container {
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: 1fr 320px 1fr;
+  }
+}
+
+.debit-form {
   display: flex;
   flex-direction: column;
+}
 
-  &--row {
-    flex-direction: row;
+.result-wrapper {
+  @media (min-width: 768px) {
+    grid-column-start: 3;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    padding: 100px 16px 0;
   }
 }
 
 .debit-form {
   flex: 1;
-  padding: 24px 16px;
+  padding: 16px;
 
   @media (min-width: 768px) {
+    grid-column: 2 / 3;
     max-width: 320px;
     margin: 100px 0 auto;
-    border-radius: 16px;
-    border: 1px solid #d3d3d3;
-    box-shadow: 5px 5px 15px 5px #d3d3d3;
+    padding: 0 16px;
   }
 
-  &__label {
-    width: fit-content;
-    padding: 0 8px;
-    transform: translate(24px, 8px);
-    background-color: #fff;
-    /* background: linear-gradient(to bottom, #fff 0%, #fff 70%, transparent 70%, transparent 100%); */
-    color: #191919;
-    border-radius: 0 0 12px 12px;
-  }
-
-  &__input {
-    flex: 1;
-    margin-bottom: 8px;
-    padding: 16px 24px;
-    border-radius: 50px;
-    border: 1px solid #d3d3d3;
-    line-height: 22px;
-  }
-
-  &__legend {
-    padding: 0 8px;
-    color: #191919;
-    font-size: 18px;
-
-    &--veolia {
-      color: #ec1b23;
-      font-weight: 700;
-    }
-  }
-
-  &__field {
-    justify-content: end;
-    padding: 8px 16px 14px;
-    border-radius: 16px;
-    border: 1px solid #d3d3d3;
-  }
-
-  &__field + &__field {
-    margin-top: 24px;
+  &__legend--veolia {
+    color: #ec1b23;
+    font-weight: 700;
   }
 
   &__submit {
     flex: 0 1;
-    margin-top: 8px;
-    padding: 16px 24px;
+    margin: 16px 19px 0;
+    padding: 8px 24px;
     border: none;
     border-radius: 50px;
     background-color: #0652ff;
@@ -175,15 +141,10 @@ function getExpenses() {
     &:focus {
       background-color: rgba(#0652ff, 0.85);
     }
-  }
 
-  &__result-list {
-    background-color: white;
-    position: fixed;
-    top: 0;
-    left: 50%;
-    width: 320px;
-    transform: translateX(-160px);
+    @media (min-width: 768px) {
+      padding: 16px 24px;
+    }
   }
 }
 </style>

@@ -14,18 +14,14 @@ const returnsDecimals = (expensesList: number[]): number[] => {
 
 const checkWhoseGonnaLooseExtraDecimal = (expensesList: number[]): number => {
   const decimals = returnsDecimals(expensesList);
-  const lowestValue = decimals.reduce((acc, curr) => {
-    return acc > 5 && acc < curr ? acc : curr;
-  });
+  const lowestValue = decimals.reduce((acc, curr) => acc > 5 && acc < curr ? acc : curr);
+  
   return findResidentIndex(decimals, lowestValue);
 };
 
 const checkWhoseGonnaGetExtraDecimal = (expensesList: number[]): number => {
   const decimals = returnsDecimals(expensesList);
-
-  const greatestValue = decimals.reduce((acc, curr) => {
-    return acc > curr ? acc : curr;
-  });
+  const greatestValue = decimals.reduce((acc, curr) => acc > curr ? acc : curr);
 
   return findResidentIndex(decimals, greatestValue);
 };
