@@ -21,7 +21,6 @@
   <input
     :id="inputId"
     class="form__input"
-    type="number"
     :value="modelValue"
     @input="$emit('update:modelValue', $event.target.value)"
   />
