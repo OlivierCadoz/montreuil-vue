@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { RESIDENTS } from '../ts/services/utils/constants';
 
+const sum = (arrayNb: number[]) => arrayNb.reduce((a: number, b: number) => a + b, 0);
+
 const { expenses } = defineProps({
   expenses: {
     type: Array,
@@ -17,6 +19,10 @@ const { expenses } = defineProps({
         v-for="(resident, index) in RESIDENTS" :key="resident">
         <span class="result-modal__item--bold">{{ resident }}</span>
         <span class="result-modal__item--mono">{{ expenses[index] }}</span>
+      </li>
+      <li class="result-modal__item">
+        <span class="result-modal__item--bold">Total</span>
+        <span class="result-modal__item--mono">{{ sum(expenses) }}</span>
       </li>
     </ul>
 
