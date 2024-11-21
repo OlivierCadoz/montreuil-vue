@@ -9,7 +9,7 @@ import { sumReducer, crossProduct } from "./utils";
  * @param {number} tenth
  * @returns {number}
  */
-const expenseProduct = (expense: number, tenth: number): number =>
+const expenseProduct = (expense: number, tenth: number) =>
   crossProduct(expense, tenth, TENTH.full);
 
 /**
@@ -17,7 +17,7 @@ const expenseProduct = (expense: number, tenth: number): number =>
  * @param {number} expense
  * @returns {Array<number>}
  */
-const expensesCalcul = (expense: number): number[] => {
+const expensesCalcul = (expense: number) => {
   const expenses: number[] = [];
 
   [TENTH.chantal, TENTH.axel, TENTH.olivier].forEach((tenth) => {
@@ -36,7 +36,7 @@ const expensesCalcul = (expense: number): number[] => {
  * @param {number} totalConsumption
  * @returns {number}
  */
-const veoliaProduct = (individualConsumption: number, totalExpense: number, totalConsumption: number): number =>
+const veoliaProduct = (individualConsumption: number, totalExpense: number, totalConsumption: number) =>
   crossProduct(individualConsumption, totalExpense, totalConsumption);
 
 /**
@@ -46,7 +46,7 @@ const veoliaProduct = (individualConsumption: number, totalExpense: number, tota
  * @param {number} totalConsumption
  * @returns {Array<number>}
  */
-const veoliaCalcul = (consumptions: number[], totalExpense: number, totalConsumption: number): number[] =>
+const veoliaCalcul = (consumptions: number[], totalExpense: number, totalConsumption: number) =>
   consumptions.map((individualConsumption) =>
     veoliaProduct(individualConsumption, totalExpense, totalConsumption)
   );
@@ -58,7 +58,7 @@ const veoliaCalcul = (consumptions: number[], totalExpense: number, totalConsump
  * @param {Array<number>} expenses
  * @returns {number}
  */
-const sum = (expenses: number[]): number => {
+const sum = (expenses: number[]) => {
   const expClone = expenses.map((exp) => exp * 100);
   return expClone.reduce(sumReducer) / 100;
 };

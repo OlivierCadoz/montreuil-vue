@@ -1,15 +1,4 @@
 /**
- * UTILITIES
- **/
-
-/**
- *
- * @param {any} acc
- * @returns {string}
- */
-const toString = (val: any): string => val.toString();
-
-/**
  * Reducer that sums every value of an array of numbers
  * @param {number} acc
  * @param {number} curr
@@ -34,4 +23,4 @@ const roundSecondDecimal = (nbr: number): number => Math.round(nbr * 100) / 100;
 const crossProduct = (base: number, multiplier: number, divider: number): number =>
   (base * multiplier) / divider;
 
-export { toString, sumReducer, roundSecondDecimal, crossProduct };
+export { sumReducer, roundSecondDecimal, crossProduct };

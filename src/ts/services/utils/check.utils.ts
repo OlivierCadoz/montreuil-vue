@@ -1,48 +1,50 @@
 import { CHECK } from "./constants";
-import { toString } from "./utils";
 
-const findResidentIndex = (decimals: number[], decFound: number): number =>
-  decimals.findIndex((dec: number) => dec === decFound);
+const findResidentIndex = (decimals: number[], decFound: number) =>
+  decimals.findIndex(dec => dec === decFound);
 
-const returnsDecimalsFromThirdToFith = (expense: string): number =>
+const returnsDecimalsFromThirdToFith = (expense: string) =>
   +expense.split(".")[1].substring(2, 5);
 
-const returnsDecimals = (expensesList: number[]): number[] => {
-  const expClone = expensesList.map(toString);
+const returnsDecimals = (expensesList: number[]) => {
+  const expClone = expensesList.map(val => val.toString());
   return expClone.map(returnsDecimalsFromThirdToFith);
 };
 
-const checkWhoseGonnaLooseExtraDecimal = (expensesList: number[]): number => {
+const checkWhoseGonnaLooseExtraDecimal = (expensesList: number[]) => {
   const decimals = returnsDecimals(expensesList);
   const lowestValue = decimals.reduce((acc, curr) => acc > 5 && acc < curr ? acc : curr);
   
   return findResidentIndex(decimals, lowestValue);
 };
 
-const checkWhoseGonnaGetExtraDecimal = (expensesList: number[]): number => {
+const checkWhoseGonnaGetExtraDecimal = (expensesList: number[]) => {
   const decimals = returnsDecimals(expensesList);
   const greatestValue = decimals.reduce((acc, curr) => acc > curr ? acc : curr);
 
   return findResidentIndex(decimals, greatestValue);
 };
 
-export const checkSums = (normalSum: number, roundedSum: number): string => {
+export const checkSums = (normalSum: number, roundedSum: number) => {
   if (normalSum > roundedSum) return CHECK.addExtra;
   if (normalSum < roundedSum) return CHECK.removeExtra;
   return CHECK.isOk;
 };
 
-// TODO: refactor this to return a value instead of mutating param
-export const correctDecimal = (checked: string, expenses: number[], expensesRounded: number[]): void => {
+export const correctDecimal = (checked: string, expenses: number[], expensesRounded: number[]) => {
+  const expensesRounded_ = { ...expensesRounded };
+
   if (checked === CHECK.addExtra) {
     const residentIndex = checkWhoseGonnaGetExtraDecimal(expenses);
 
-    expensesRounded[residentIndex] =
-      (expensesRounded[residentIndex] * 100 + 1) / 100;
+    expensesRounded_[residentIndex] =
+      (expensesRounded_[residentIndex] * 100 + 1) / 100;
   } else if (checked === CHECK.removeExtra) {
     const residentIndex = checkWhoseGonnaLooseExtraDecimal(expenses);
 
-    expensesRounded[residentIndex] =
-      (expensesRounded[residentIndex] * 100 - 1) / 100;
+    expensesRounded_[residentIndex] =
+      (expensesRounded_[residentIndex] * 100 - 1) / 100;
   }
+
+  return expensesRounded_;
 };

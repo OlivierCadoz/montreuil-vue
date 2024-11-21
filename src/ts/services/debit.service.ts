@@ -6,16 +6,14 @@ function getDebit(totalExpense: number): number[] {
   const expenses = expensesCalcul(totalExpense);
   const expensesRounded = expenses.map(roundSecondDecimal);
 
-  const roundedSum = sum(expensesRounded);
+  const sumRounded = sum(expensesRounded);
 
-  if (roundedSum === totalExpense) return expensesRounded;
+  if (sumRounded === totalExpense) return expensesRounded;
 
   const normalSum = sum(expenses);
-  const checked = checkSums(normalSum, roundedSum);
+  const checked = checkSums(normalSum, sumRounded);
 
-  correctDecimal(checked, expenses, expensesRounded);
-
-  return expensesRounded
+  return correctDecimal(checked, expenses, expensesRounded);
 }
 
 function getVeolia({
@@ -49,9 +47,7 @@ function getVeolia({
   const normalSum = sum(expenses);
   const checked = checkSums(normalSum, roundedSum);
 
-  correctDecimal(checked, expenses, expensesRounded);
-
-  return expensesRounded;
+  return correctDecimal(checked, expenses, expensesRounded);
 }
 
 export { getDebit, getVeolia };

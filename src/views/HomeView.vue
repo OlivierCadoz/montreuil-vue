@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue'
 
-import FormField from "../components/FormField.vue";
-import InputNumber from "../components/InputNumber.vue";
-import ResultList from "../components/ResultList.vue";
+import FormField from '../components/FormField.vue'
+import InputNumber from '../components/InputNumber.vue'
+import ResultList from '../components/ResultList.vue'
 
-import { getDebit, getVeolia } from "../ts/services/debit.service";
-import { RESIDENTS } from "../ts/services/utils/constants";
+import { getDebit, getVeolia } from '../ts/services/debit.service'
 
-const debit = ref(0);
-const cons = ref(0);
-const axelCons = ref(0);
-const olivierCons = ref(0);
-const expenses = ref([] as number[]);
-const isVeolia = ref(false);
+const debit = ref(0)
+const cons = ref(0)
+const axelCons = ref(0)
+const olivierCons = ref(0)
+const expenses = ref([] as number[])
+const isVeolia = ref(false)
 
 function getExpenses() {
   if (isVeolia.value) {
@@ -22,15 +21,15 @@ function getExpenses() {
       totalConsumption: +cons.value,
       consumptionAxel: +axelCons.value,
       consumptionOlivier: +olivierCons.value,
-    });
-  } else  {
-    expenses.value = getDebit(+debit.value);
+    })
+  } else {
+    expenses.value = getDebit(+debit.value)
   }
 }
 </script>
 
 <template>
-  <section class="grid-container">    
+  <section class="grid-container">
     <form class="debit-form" @submit.prevent="getExpenses">
       <FormField row>
         <template #legend>
@@ -39,31 +38,18 @@ function getExpenses() {
         </template>
 
         <label class="debit-form__toggle-label" for="toggle">Oui</label>
-        <input
-          id="toggle"
-          class="debit-form__toggle"
-          type="checkbox"
-          v-model="isVeolia"
-        />
+        <input id="toggle" class="debit-form__toggle" type="checkbox" v-model="isVeolia" />
       </FormField>
 
       <FormField>
-        <template #legend>
-          Répartition de la facture
-        </template>
+        <template #legend> Répartition de la facture </template>
 
-        <InputNumber inputId="debit" v-model="debit">
-          Montant total :
-        </InputNumber>
+        <InputNumber inputId="debit" v-model="debit"> Montant total : </InputNumber>
 
         <template v-if="isVeolia">
-          <InputNumber inputId="cons" v-model="cons">
-            Consommation totale :
-          </InputNumber>
+          <InputNumber inputId="cons" v-model="cons"> Consommation totale : </InputNumber>
 
-          <InputNumber inputId="axel-cons" v-model="axelCons">
-            Consommation de Axel :
-          </InputNumber>
+          <InputNumber inputId="axel-cons" v-model="axelCons"> Consommation de Axel : </InputNumber>
 
           <InputNumber inputId="olivier-cons" v-model="olivierCons">
             Consommation de olivier :
@@ -75,11 +61,7 @@ function getExpenses() {
     </form>
 
     <aside class="result-wrapper">
-      <ResultList
-        v-if="!!expenses.length"
-        :expenses="expenses"
-        @close="expenses = []"
-      />
+      <ResultList v-if="!!expenses.length" :expenses="expenses" @close="expenses = []" />
     </aside>
   </section>
 </template>

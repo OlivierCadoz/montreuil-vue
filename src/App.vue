@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import { RouterView } from "vue-router";
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <main class="wrapper">
-    <RouterView />
-  </main>
+  <RouterView />
 </template>
 
-<style lang="scss">
-@import "./assets/font";
+<style scoped lang="scss">
+@import './assets/font';
 
 * {
   box-sizing: border-box;
@@ -20,7 +18,7 @@ body {
   padding: 0;
   height: 100vh;
   width: 100vw;
-  font-family: "Roboto-Regular", sans-serif;
+  font-family: 'Roboto-Regular', sans-serif;
   font-size: 16px;
 }
 
