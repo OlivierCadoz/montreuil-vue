@@ -23,8 +23,7 @@ const { row } = defineProps({
   flex-direction: column;
   justify-content: end;
   padding: 8px 16px 12px;
-  border-radius: 16px;
-  border: 1px solid #d3d3d3;
+  border: 0;
 
   & + &{
     margin-top: 16px;

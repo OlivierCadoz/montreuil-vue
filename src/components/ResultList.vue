@@ -1,14 +1,8 @@
 <script setup lang="ts">
 import { RESIDENTS } from '../ts/services/utils/constants';
+import { sum } from '../ts/services/utils/calcul.utils';
 
-const sum = (arrayNb: number[]) => arrayNb.reduce((a: number, b: number) => a + b, 0);
-
-const { expenses } = defineProps({
-  expenses: {
-    type: Array,
-    required: true,
-  },
-});
+const { expenses } = defineProps<{ expenses: number[] }>();
 </script>
 
 <template>
@@ -40,10 +34,11 @@ const { expenses } = defineProps({
   background-color: #90ee90;
   padding: 8px;
   border-radius: 16px;
+  box-shadow: 0 2px 6px #0000001a;
 
   &__close-btn {
     align-self: flex-end;
-    margin-top: 4px;
+    margin-top: 16px;
     padding: 6px 12px;
     color: #90ee90;
     font-size: 16px;
@@ -72,6 +67,7 @@ const { expenses } = defineProps({
     justify-content: space-between;
     padding: 8px 12px;
     line-height: 20px;
+    font-family: 'Roboto-Regular', sans-serif;
 
     &:nth-child(2n) {
       border-radius: 50px;

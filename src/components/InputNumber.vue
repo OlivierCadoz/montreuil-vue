@@ -22,12 +22,13 @@
     :id="inputId"
     class="form__input"
     :value="modelValue"
-    @input="$emit('update:modelValue', $event.target.value)"
+    @input="$emit('update:modelValue', ($event.target as any).value)"
   />
 </template>
 
 <style lang="scss" scoped>
 .form__label {
+  font-family: 'Roboto-Regular', sans-serif;
   width: fit-content;
   padding: 0 8px;
   transform: translate(24px, 8px);
@@ -42,6 +43,7 @@
   padding: 8px 24px;
   border-radius: 50px;
   border: 1px solid #d3d3d3;
+  box-shadow: inset 0 2px 6px #0000001a;
   line-height: 22px;
 
   @media (min-width: 768px) {

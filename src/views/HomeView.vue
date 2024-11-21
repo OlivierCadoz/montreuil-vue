@@ -52,7 +52,7 @@ function getExpenses() {
           <InputNumber inputId="axel-cons" v-model="axelCons"> Consommation de Axel : </InputNumber>
 
           <InputNumber inputId="olivier-cons" v-model="olivierCons">
-            Consommation de olivier :
+            Consommation de Olivier :
           </InputNumber>
         </template>
       </FormField>
@@ -74,11 +74,6 @@ function getExpenses() {
   }
 }
 
-.debit-form {
-  display: flex;
-  flex-direction: column;
-}
-
 .result-wrapper {
   @media (min-width: 768px) {
     grid-column-start: 3;
@@ -91,13 +86,17 @@ function getExpenses() {
 
 .debit-form {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   padding: 16px;
+  box-shadow: 0 2px 6px #0000001a;
 
   @media (min-width: 768px) {
     grid-column: 2 / 3;
     max-width: 320px;
     margin: 100px 0 auto;
-    padding: 0 16px;
+    padding: 24px 16px;
+    border-radius: 16px;
   }
 
   &__legend--veolia {
@@ -105,7 +104,12 @@ function getExpenses() {
     font-weight: 700;
   }
 
+  &__toggle-label {
+    font-family: 'Roboto-Regular', sans-serif;
+  }
+
   &__submit {
+    font-family: 'Roboto-Regular', sans-serif;
     flex: 0 1;
     margin: 16px 19px 0;
     padding: 8px 24px;
