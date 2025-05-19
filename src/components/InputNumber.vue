@@ -1,16 +1,10 @@
 <script setup lang="ts">
-  const { modelValue, inputId } = defineProps({
-    modelValue: {
-      type: Number,
-      required: true
-    },
-    inputId: {
-      type: String,
-      required: true
-    }
-  });
+const { modelValue, inputId } = defineProps<{
+  modelValue: number;
+  inputId: string;
+}>();
 
-  defineEmits(['update:modelValue'])
+defineEmits(["update:modelValue"]);
 </script>
 
 <template>
@@ -22,7 +16,7 @@
     :id="inputId"
     class="form__input"
     :value="modelValue"
-    @input="$emit('update:modelValue', $event.target.value)"
+    @input="$emit('update:modelValue', ($event.target as any).value)"
   />
 </template>
 

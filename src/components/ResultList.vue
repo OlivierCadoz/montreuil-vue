@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import { RESIDENTS } from '../ts/services/utils/constants';
+import { RESIDENTS } from "../ts/services/utils/constants";
 
-const sum = (arrayNb: number[]) => arrayNb.reduce((a: number, b: number) => a + b, 0);
+const sum = (arrayNb: number[]) =>
+  arrayNb.reduce((a: number, b: number) => a + b, 0);
 
-const { expenses } = defineProps({
-  expenses: {
-    type: Array,
-    required: true,
-  },
-});
+const { expenses } = defineProps<{ expenses: number[] }>();
 </script>
 
 <template>
@@ -16,7 +12,9 @@ const { expenses } = defineProps({
     <ul class="result-modal__list">
       <li
         class="result-modal__item"
-        v-for="(resident, index) in RESIDENTS" :key="resident">
+        v-for="(resident, index) in RESIDENTS"
+        :key="resident"
+      >
         <span class="result-modal__item--bold">{{ resident }}</span>
         <span class="result-modal__item--mono">{{ expenses[index] }}</span>
       </li>
@@ -26,7 +24,9 @@ const { expenses } = defineProps({
       </li>
     </ul>
 
-    <button class="result-modal__close-btn" @click="$emit('close')">close</button>
+    <button class="result-modal__close-btn" @click="$emit('close')">
+      close
+    </button>
   </section>
 </template>
 
