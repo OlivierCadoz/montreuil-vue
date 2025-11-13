@@ -18,9 +18,9 @@ function getExpenses() {
   if (isVeolia.value) {
     expenses.value = getVeolia({
       totalExpense: +debit.value,
-      totalConsumption: +cons.value,
-      consumptionAxel: +axelCons.value,
-      consumptionOlivier: +olivierCons.value,
+      totalCons: +cons.value,
+      axelCons: +axelCons.value,
+      olivierCons: +olivierCons.value,
     })
   } else {
     expenses.value = getDebit(+debit.value)

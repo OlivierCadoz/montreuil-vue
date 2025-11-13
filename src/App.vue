@@ -7,7 +7,7 @@ import { RouterView } from 'vue-router'
 </template>
 
 <style scoped lang="scss">
-@import './assets/font';
+@use './assets/font';
 
 * {
   box-sizing: border-box;

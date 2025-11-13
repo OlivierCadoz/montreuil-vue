@@ -1,53 +1,44 @@
-import { roundSecondDecimal } from "./utils/utils";
-import { expensesCalcul, sum, veoliaCalcul } from "./utils/calcul.utils";
-import { checkSums, correctDecimal } from "./utils/check.utils";
+import { roundSecondDecimal } from './utils/utils'
+import { expensesCalcul, sum, veoliaCalcul } from './utils/calcul.utils'
+import { checkSums, correctDecimal } from './utils/check.utils'
+
+function finalExpenses(expenses: number[], totalExpense: number) {
+  const expensesRounded = expenses.map(roundSecondDecimal)
+
+  const sumRounded = sum(expensesRounded)
+
+  if (sumRounded === totalExpense) return expensesRounded
+
+  const normalSum = sum(expenses)
+  const checked = checkSums(normalSum, sumRounded)
+
+  return correctDecimal(checked, expenses, expensesRounded)
+}
 
 function getDebit(totalExpense: number): number[] {
-  const expenses = expensesCalcul(totalExpense);
-  const expensesRounded = expenses.map(roundSecondDecimal);
+  const expenses = expensesCalcul(totalExpense)
 
-  const sumRounded = sum(expensesRounded);
-
-  if (sumRounded === totalExpense) return expensesRounded;
-
-  const normalSum = sum(expenses);
-  const checked = checkSums(normalSum, sumRounded);
-
-  return correctDecimal(checked, expenses, expensesRounded);
+  return finalExpenses(expenses, totalExpense)
 }
 
 function getVeolia({
   totalExpense,
-  totalConsumption,
-  consumptionAxel,
-  consumptionOlivier,
+  totalCons,
+  axelCons,
+  olivierCons,
 }: {
-  totalExpense: number,
-  totalConsumption: number,
-  consumptionAxel: number,
-  consumptionOlivier: number,
+  totalExpense: number
+  totalCons: number
+  axelCons: number
+  olivierCons: number
 }): number[] {
-  const consumptionChantal =
-    totalConsumption - consumptionAxel - consumptionOlivier;
+  const chantalCons = totalCons - axelCons - olivierCons
 
-  const consumptions = [
-    consumptionChantal,
-    consumptionAxel,
-    consumptionOlivier,
-  ];
+  const consumptions = [chantalCons, axelCons, olivierCons]
 
-  const expenses = veoliaCalcul(consumptions, totalExpense, totalConsumption);
+  const expenses = veoliaCalcul(consumptions, totalExpense, totalCons)
 
-  const expensesRounded = expenses.map(roundSecondDecimal);
-
-  const roundedSum = sum(expensesRounded);
-
-  if (roundedSum === totalExpense) return expensesRounded;
-
-  const normalSum = sum(expenses);
-  const checked = checkSums(normalSum, roundedSum);
-
-  return correctDecimal(checked, expenses, expensesRounded);
+  return finalExpenses(expenses, totalExpense)
 }
 
-export { getDebit, getVeolia };
+export { getDebit, getVeolia }
