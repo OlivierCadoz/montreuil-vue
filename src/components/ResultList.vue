@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { RESIDENTS } from "../ts/services/utils/constants";
+import { sum } from '../ts/services/utils/calcul.utils'
 
-const sum = (arrayNb: number[]) =>
-  arrayNb.reduce((a: number, b: number) => a + b, 0);
+// const sum = (arrayNb: number[]) =>
+//   arrayNb.reduce((a: number, b: number) => a + b, 0);
 
 const { expenses } = defineProps<{ expenses: number[] }>();
 </script>
